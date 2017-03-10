@@ -5,10 +5,8 @@ using namespace std;
 
 class ProgotronParser
 {
-  private:
+  public:
     char m_token;
-	
-	public:
 	  ProgotronParser()
 		{
 			get_token(); //Initialize the first token
