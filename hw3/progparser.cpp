@@ -1,5 +1,6 @@
 // William Thurman        3/9/17
-#include <string>
+#include<string>
+#include<iostream>
 
 using namespace std;
 
