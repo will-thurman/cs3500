@@ -16,6 +16,7 @@ class ProgotronParser
 		}
 		
 	  void get_token();
+    void skip_whitespace();
 		
 		bool parse_int(); 
 		bool parse_dec();
@@ -50,14 +51,24 @@ int main()
 {
   ProgotronParser parse;
   while(!cin.eof())
+  {
 	  parse.get_token();
+    parse.skip_whitespace();
+  }
   cout << endl;
   return 0;
 }
 
 void ProgotronParser::get_token()
 {
+  m_token = cin.get();
   m_next = cin.peek();
+  cout << m_token;
+  return;
+}
+
+void ProgotronParser::skip_whitespace()
+{
   if(isspace(m_next))
   {
     while(isspace(m_next))
@@ -66,10 +77,7 @@ void ProgotronParser::get_token()
       m_next = cin.peek();
     }
   }
-  else
-  {
-    m_token = cin.get();
-    cout << m_token;
-	}
   return;
 }
+
+// bool ProgotronParser::
