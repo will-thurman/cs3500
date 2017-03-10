@@ -8,6 +8,8 @@ class ProgotronParser
 {
   public:
     char m_token;
+    char m_next;
+    
 	  ProgotronParser()
 		{
 			get_token(); //Initialize the first token
@@ -47,19 +49,27 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-	while(!cin.eof())
-	{
-		parse.get_token();
-	}
+  while(!cin.eof())
+	  parse.get_token();
+  cout << endl;
   return 0;
 }
 
 void ProgotronParser::get_token()
 {
-	while(m_token != ' ' || m_token != '\n' || m_token != '\0')
-	{
-	  m_token = cin.get();
-		cout << m_token;
+  m_next = cin.peek();
+  if(isspace(m_next))
+  {
+    while(isspace(m_next))
+    {
+      m_token = cin.get();
+      m_next = cin.peek();
+    }
+  }
+  else
+  {
+    m_token = cin.get();
+    cout << m_token;
 	}
-	return;
+  return;
 }
