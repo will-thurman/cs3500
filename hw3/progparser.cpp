@@ -61,7 +61,9 @@ int main()
 
 bool ProgotronParser::parse_int()
 {
-  if()
+  //if()
+  
+  return false;
 }
 
 void ProgotronParser::get_token()
