@@ -53,16 +53,33 @@ int main()
   while(!cin.eof())
   {
 	  parse.get_token();
-    parse.skip_whitespace();
+    // parse.skip_whitespace();
   }
   cout << endl;
   return 0;
 }
 
+bool ProgotronParser::parse_int()
+{
+  if()
+}
+
 void ProgotronParser::get_token()
 {
-  m_token = cin.get();
   m_next = cin.peek();
+  if(isspace(m_next))
+  {
+    while(isspace(m_next))
+    {
+      m_token = cin.get();
+      m_next = cin.peek();
+    }
+  }
+  else
+  {
+    m_token = cin.get();
+    m_next = cin.peek();
+  }
   cout << m_token;
   return;
 }
