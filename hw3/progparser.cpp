@@ -61,27 +61,23 @@ int main()
 
 bool ProgotronParser::parse_int()
 {
-  //if()
   
+  if(m_token == '+' || m_token == '-')
+  {
+    get_token();
+  }
+  else if(isdigit(m_token))
+  {
+    
+  }
   return false;
 }
 
 void ProgotronParser::get_token()
 {
+  
+  m_token = cin.get();
   m_next = cin.peek();
-  if(isspace(m_next))
-  {
-    while(isspace(m_next))
-    {
-      m_token = cin.get();
-      m_next = cin.peek();
-    }
-  }
-  else
-  {
-    m_token = cin.get();
-    m_next = cin.peek();
-  }
   cout << m_token;
   return;
 }
