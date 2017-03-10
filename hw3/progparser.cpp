@@ -55,7 +55,7 @@ int main()
 
 void ProgotronParser::get_token()
 {
-	while(m_token == ' ' || m_token == '\n' || m_token == '\0')
+	while(m_token != ' ' || m_token != '\n' || m_token != '\0')
 	{
 	  m_token = cin.get();
 		cout << m_token;
