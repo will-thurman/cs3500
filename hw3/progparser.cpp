@@ -50,8 +50,8 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  if(parse.parse_dec())
-    cout << "DEC" << endl;
+  if(parse.parse_str())
+    cout << "str" << endl;
   cout << endl;
   return 0;
 }
@@ -83,7 +83,6 @@ bool ProgotronParser::parse_dec()
   {
     get_token();
   }
-  
   if(isdigit(m_next))
   {
     while(isdigit(m_next))
@@ -98,11 +97,36 @@ bool ProgotronParser::parse_dec()
       {
         get_token();
       }
-      
       if(isspace(m_next))
       {
         return true;
       }
+    }
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_str()
+{
+  if(m_next == '"')
+  {
+    get_token();
+    
+    if(!isspace(m_next))
+    {
+      while(m_next != '"')
+      {
+        get_token();
+        if(isspace(m_next))
+          return false;
+        
+        
+      }
+      if(m_next == '"')
+        get_token();
+      
+      if(isspace(m_next))
+        return true;
     }
   }
   return false;
