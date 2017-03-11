@@ -10,7 +10,7 @@ class ProgotronParser
     char m_token;
     char m_next;
     
-	  ProgotronParser()
+    ProgotronParser()
     {
       m_next = cin.peek();
     }
@@ -50,11 +50,12 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  if(parse.parse_int())
-    cout << "INT" << endl;
+  if(parse.parse_dec())
+    cout << "DEC" << endl;
   cout << endl;
   return 0;
 }
+
 
 bool ProgotronParser::parse_int()
 {
@@ -71,7 +72,38 @@ bool ProgotronParser::parse_int()
     
     if(isspace(m_next))
       return true;
-    skip_whitespace();
+    
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_dec()
+{
+  if(m_next == '+' || m_next == '-')
+  {
+    get_token();
+  }
+  
+  if(isdigit(m_next))
+  {
+    while(isdigit(m_next))
+      get_token();
+    
+    if(m_next == '.')
+      get_token();
+    
+    if(isdigit(m_next))
+    {
+      while(isdigit(m_next))
+      {
+        get_token();
+      }
+      
+      if(isspace(m_next))
+      {
+        return true;
+      }
+    }
   }
   return false;
 }
