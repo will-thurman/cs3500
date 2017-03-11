@@ -9,6 +9,7 @@ class ProgotronParser
   public:
     char m_token;
     char m_next;
+    const static string keywords[];
     
     ProgotronParser()
     {
@@ -17,6 +18,8 @@ class ProgotronParser
 		
 	  void get_token();
     void skip_whitespace();
+    
+    bool is_keyword(const string& val);
 		
     bool parse_int(); 
     bool parse_dec();
@@ -50,13 +53,27 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  if(parse.parse_str())
-    cout << "str" << endl;
+  // if(parse.parse_str())
+    // cout << "str" << endl;
+  parse.is_keyword("word")
   cout << endl;
   return 0;
 }
 
+const string ProgotronParser::keywords[] = {":=", "+", "-" , "*", "OR", "AND",
+                                            "~", "<", ">", "(", ")", "=", "#",
+                                            "&", "!", "PRINT", "IF", "ELSE",
+                                            "FI", "LOOP", "POOL", "RET", "BEGIN",
+                                            "END", "/"};
 
+bool ProgotronParser::is_keyword(const string& s)
+{
+  for(auto str: keywords)
+  {
+    cout << str << end;
+  }
+}
+                                            
 bool ProgotronParser::parse_int()
 {
   
