@@ -64,12 +64,15 @@ bool ProgotronParser::parse_int()
   {
     get_token();
   }
-  
+  cout << "Checking if " << m_next << " is digit" << endl;
   if(isdigit(m_next))
   {
+     
     while(isdigit(m_next))
+    {
+      cout << "Next: " << m_next << endl;
       get_token();
-    
+    }
     if(isspace(m_next))
       return true;
     
