@@ -169,7 +169,7 @@ bool ProgotronParser::parse_id()
       
       if(isspace(m_next))
       {
-        if(is_keyword(id))
+        if(!is_keyword(id))
           return true;
       }
     }
