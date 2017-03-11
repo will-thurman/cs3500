@@ -64,15 +64,12 @@ bool ProgotronParser::parse_int()
   {
     get_token();
   }
-  cout << "Checking if " << m_next << " is digit" << endl;
   if(isdigit(m_next))
   {
      
     while(isdigit(m_next))
-    {
-      cout << "Next: " << m_next << endl;
       get_token();
-    }
+
     if(isspace(m_next))
       return true;
     
@@ -130,6 +127,32 @@ bool ProgotronParser::parse_str()
       
       if(isspace(m_next))
         return true;
+    }
+  }
+  return false;
+}
+
+void ProgotronParser::parse_id()
+{
+  string id = "";
+  
+  if(isalpha(m_next))
+  {
+    get_token();
+    id += m_token;
+    
+    if(isalnum(m_next))
+    {
+      while(isalnum(m_next))
+      {
+        get_token();
+        id += m_token;
+      }
+      
+      if(isspace(m_next))
+      {
+        return true;
+      }
     }
   }
   return false;
