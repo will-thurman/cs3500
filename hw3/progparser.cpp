@@ -50,8 +50,8 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  if(parse.parse_str())
-    cout << "str" << endl;
+  if(parse.parse_id())
+    cout << "ID" << endl;
   cout << endl;
   return 0;
 }
@@ -132,7 +132,7 @@ bool ProgotronParser::parse_str()
   return false;
 }
 
-void ProgotronParser::parse_id()
+bool ProgotronParser::parse_id()
 {
   string id = "";
   
