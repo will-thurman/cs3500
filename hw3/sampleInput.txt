@@ -1,5 +1,1 @@
-FUNC main ( )
- BEGIN
-   x := 2 + 2 !
-     PRINT ( x * 100 ) !
-     END.
+12345
