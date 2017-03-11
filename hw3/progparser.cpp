@@ -16,7 +16,7 @@ class ProgotronParser
       m_next = cin.peek();
     }
 		
-	  void get_token();
+    void get_token();
     void skip_whitespace();
     
     bool is_keyword(const string& val);
@@ -41,8 +41,8 @@ class ProgotronParser
     bool parse_if();     // IfStatement := IF ( Expression ) StatementSequence [ ELSE StatementSequence ] FI
     bool parse_loop();   // LoopStatement := LOOP ( Expression ) StatementSequence POOL
 
-		bool parse_statement();     // Statement := Assignment | PrintStatement | RetStatement | IfStatement | LoopStatement
-	  bool parse_statement_seq(); // StatementSequence := Statement { Statement }
+    bool parse_statement();     // Statement := Assignment | PrintStatement | RetStatement | IfStatement | LoopStatement
+    bool parse_statement_seq(); // StatementSequence := Statement { Statement }
 
     bool parse_param_seq(); // ParamSequence :=  identifier  { , identifier }
     bool parse_func_dec();  // FunctionDeclaration := FUNC identifier ( [ ParamSequence ] ) BEGIN StatementSequence END.
@@ -53,8 +53,8 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  if(parse.parse_str())
-    cout << "str" << endl;
+  if(parse.parse_id())
+    cout << "ID" << endl;
   cout << endl;
   return 0;
 }
