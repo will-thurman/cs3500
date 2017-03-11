@@ -50,7 +50,8 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  parse.parse_int();
+  if(parse.parse_int())
+    cout << "INT" << endl;
   cout << endl;
   return 0;
 }
