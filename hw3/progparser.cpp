@@ -177,6 +177,61 @@ bool ProgotronParser::parse_id()
   return false;
 }
 
+bool ProgotronParser::parse_rel()
+{
+  if(m_next == '<' || m_next == '>' || m_next == '=' || m_next == '#')
+  {
+    get_token();
+    if(isspace(m_next))
+      return true;
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_add_op()
+{
+  string op = "";
+  if(m_next == '+' || m_next == '-' || m_next == '&')
+  {
+    get_token();
+    if(isspace(m_next))
+      return true;
+  }
+  else if(m_next == 'O')
+  {
+    while(!isspace(m_next))
+    {
+      get_token();
+      op += m_token;
+    }
+    if(op == "OR")
+      return true;
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_mul_op()
+{
+  string op = "";
+  if(m_next == '*' || m_next == '/')
+  {
+    get_token();
+    if(isspace(m_next))
+      return true;
+  }
+  else if(m_next == 'A')
+  {
+    while(!isspace(m_next))
+    {
+      get_token();
+      op += m_token;
+    }
+    if(op == "AND")
+      return true;
+  }
+  return false;
+}
+
 void ProgotronParser::get_token()
 {
   m_token = cin.get();
