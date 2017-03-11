@@ -55,7 +55,7 @@ int main()
   ProgotronParser parse;
   // if(parse.parse_str())
     // cout << "str" << endl;
-  parse.is_keyword("word")
+  parse.is_keyword("word");
   cout << endl;
   return 0;
 }
@@ -68,9 +68,9 @@ const string ProgotronParser::keywords[] = {":=", "+", "-" , "*", "OR", "AND",
 
 bool ProgotronParser::is_keyword(const string& s)
 {
-  for(auto str: keywords)
+  for(int i = 0; i < sizeof(keywords)/sizeof(keywords[0]); i++)
   {
-    cout << str << end;
+    cout << keywords[i] << endl;
   }
 }
                                             
