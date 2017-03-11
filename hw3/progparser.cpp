@@ -53,9 +53,8 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  // if(parse.parse_str())
-    // cout << "str" << endl;
-  parse.is_keyword("word");
+  if(parse.parse_str())
+    cout << "str" << endl;
   cout << endl;
   return 0;
 }
@@ -70,8 +69,10 @@ bool ProgotronParser::is_keyword(const string& s)
 {
   for(int i = 0; i < sizeof(keywords)/sizeof(keywords[0]); i++)
   {
-    cout << keywords[i] << endl;
+    if(s == keywords[i])
+      return true;
   }
+  return false;
 }
                                             
 bool ProgotronParser::parse_int()
@@ -168,7 +169,8 @@ bool ProgotronParser::parse_id()
       
       if(isspace(m_next))
       {
-        return true;
+        if(is_keyword(id))
+          return true;
       }
     }
   }
