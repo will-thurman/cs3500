@@ -1,14 +1,14 @@
 // William Thurman        3/9/17
 #include<string>
 #include<iostream>
+#include<vector>
 
 using namespace std;
 
 class ProgotronParser
 {
   public:
-    char m_token;
-    char m_next;
+    vector<string> m_tokens;
     const static string keywords[];
     
     ProgotronParser()
@@ -16,7 +16,7 @@ class ProgotronParser
       m_next = cin.peek();
     }
 		
-    void get_token();
+    string get_tokens();
     void skip_whitespace();
     
     bool is_keyword(const string& val);
@@ -53,7 +53,7 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  if(parse.parse_id())
+  if(parse.parse_int())
     cout << "ID" << endl;
   cout << endl;
   return 0;
@@ -74,183 +74,175 @@ bool ProgotronParser::is_keyword(const string& s)
   }
   return false;
 }
-                                            
+
 bool ProgotronParser::parse_int()
 {
-  
-  if(m_next == '+' || m_next == '-')
+  int i = 0;
+  if(m_tokens[0][i] == '+' || m_tokens[0][i] == '-')
   {
-    get_token();
+    i++;
   }
-  if(isdigit(m_next))
+  if(isdigit(m_tokens[0][i]))
   {
      
-    while(isdigit(m_next))
-      get_token();
+    while(isdigit(m_tokens[0][i]) && i < m_tokens[0].length())
+      i++;
 
-    if(isspace(m_next))
+    if(i == m_tokens[0].length())
+    {
+      m_tokens[0].erase(m_tokens.begin());
       return true;
-    
-  }
-  return false;
-}
-
-bool ProgotronParser::parse_dec()
-{
-  if(m_next == '+' || m_next == '-')
-  {
-    get_token();
-  }
-  if(isdigit(m_next))
-  {
-    while(isdigit(m_next))
-      get_token();
-    
-    if(m_next == '.')
-      get_token();
-    
-    if(isdigit(m_next))
-    {
-      while(isdigit(m_next))
-      {
-        get_token();
-      }
-      if(isspace(m_next))
-      {
-        return true;
-      }
     }
   }
   return false;
 }
 
-bool ProgotronParser::parse_str()
-{
-  if(m_next == '"')
-  {
-    get_token();
+// bool ProgotronParser::parse_dec()
+// {
+  // if(m_next == '+' || m_next == '-')
+  // {
+    // get_token();
+  // }
+  // if(isdigit(m_next))
+  // {
+    // while(isdigit(m_next))
+      // get_token();
     
-    if(!isspace(m_next))
-    {
-      while(m_next != '"')
-      {
-        get_token();
-        if(isspace(m_next))
-          return false;
+    // if(m_next == '.')
+      // get_token();
+    
+    // if(isdigit(m_next))
+    // {
+      // while(isdigit(m_next))
+      // {
+        // get_token();
+      // }
+      // if(isspace(m_next))
+      // {
+        // return true;
+      // }
+    // }
+  // }
+  // return false;
+// }
+
+// bool ProgotronParser::parse_str()
+// {
+  // if(m_next == '"')
+  // {
+    // get_token();
+    
+    // if(!isspace(m_next))
+    // {
+      // while(m_next != '"')
+      // {
+        // get_token();
+        // if(isspace(m_next))
+          // return false;
         
         
-      }
-      if(m_next == '"')
-        get_token();
+      // }
+      // if(m_next == '"')
+        // get_token();
       
-      if(isspace(m_next))
-        return true;
-    }
-  }
-  return false;
-}
+      // if(isspace(m_next))
+        // return true;
+    // }
+  // }
+  // return false;
+// }
 
-bool ProgotronParser::parse_id()
-{
-  string id = "";
+// bool ProgotronParser::parse_id()
+// {
+  // string id = "";
   
-  if(isalpha(m_next))
-  {
-    get_token();
-    id += m_token;
+  // if(isalpha(m_next))
+  // {
+    // get_token();
+    // id += m_token;
     
-    if(isalnum(m_next))
-    {
-      while(isalnum(m_next))
-      {
-        get_token();
-        id += m_token;
-      }
+    // if(isalnum(m_next))
+    // {
+      // while(isalnum(m_next))
+      // {
+        // get_token();
+        // id += m_token;
+      // }
       
-      if(isspace(m_next))
-      {
-        if(!is_keyword(id))
-          return true;
-      }
-    }
+      // if(isspace(m_next))
+      // {
+        // if(!is_keyword(id))
+          // return true;
+      // }
+    // }
+  // }
+  // return false;
+// }
+
+// bool ProgotronParser::parse_rel()
+// {
+  // if(m_next == '<' || m_next == '>' || m_next == '=' || m_next == '#')
+  // {
+    // get_token();
+    // if(isspace(m_next))
+      // return true;
+  // }
+  // return false;
+// }
+
+// bool ProgotronParser::parse_add_op()
+// {
+  // string op = "";
+  // if(m_next == '+' || m_next == '-' || m_next == '&')
+  // {
+    // get_token();
+    // if(isspace(m_next))
+      // return true;
+  // }
+  // else if(m_next == 'O')
+  // {
+    // while(!isspace(m_next))
+    // {
+      // get_token();
+      // op += m_token;
+    // }
+    // if(op == "OR")
+      // return true;
+  // }
+  // return false;
+// }
+
+// bool ProgotronParser::parse_mul_op()
+// {
+  // string op = "";
+  // if(m_next == '*' || m_next == '/')
+  // {
+    // get_token();
+    // if(isspace(m_next))
+      // return true;
+  // }
+  // else if(m_next == 'A')
+  // {
+    // while(!isspace(m_next))
+    // {
+      // get_token();
+      // op += m_token;
+    // }
+    // if(op == "AND")
+      // return true;
+  // }
+  // return false;
+// }
+
+void ProgotronParser::get_tokens()
+{
+  string token;
+  while(cin >> token)
+  {
+    cout << token;
+    m_tokens.push_back(token);
   }
-  return false;
 }
 
-bool ProgotronParser::parse_rel()
-{
-  if(m_next == '<' || m_next == '>' || m_next == '=' || m_next == '#')
-  {
-    get_token();
-    if(isspace(m_next))
-      return true;
-  }
-  return false;
-}
-
-bool ProgotronParser::parse_add_op()
-{
-  string op = "";
-  if(m_next == '+' || m_next == '-' || m_next == '&')
-  {
-    get_token();
-    if(isspace(m_next))
-      return true;
-  }
-  else if(m_next == 'O')
-  {
-    while(!isspace(m_next))
-    {
-      get_token();
-      op += m_token;
-    }
-    if(op == "OR")
-      return true;
-  }
-  return false;
-}
-
-bool ProgotronParser::parse_mul_op()
-{
-  string op = "";
-  if(m_next == '*' || m_next == '/')
-  {
-    get_token();
-    if(isspace(m_next))
-      return true;
-  }
-  else if(m_next == 'A')
-  {
-    while(!isspace(m_next))
-    {
-      get_token();
-      op += m_token;
-    }
-    if(op == "AND")
-      return true;
-  }
-  return false;
-}
-
-void ProgotronParser::get_token()
-{
-  m_token = cin.get();
-  m_next = cin.peek();
-  cout << m_token;
-  return;
-}
-
-void ProgotronParser::skip_whitespace()
-{
-  if(isspace(m_next))
-  {
-    while(isspace(m_next))
-    {
-      m_token = cin.get();
-      m_next = cin.peek();
-    }
-  }
-  return;
-}
 
 // bool ProgotronParser::
