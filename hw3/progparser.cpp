@@ -55,6 +55,10 @@ int main()
   ProgotronParser parse;
   if(parse.parse_func_seq())
     cout << "CORRECT" << endl;
+  else
+  {
+    cout << "INVALID!"
+  }
   cout << endl;
   return 0;
 }
@@ -280,7 +284,6 @@ bool ProgotronParser::parse_term()
       {}
       else
       {
-        cout << "Stopping because of " << m_tokens[0] << endl;
         res = false;
         break;
       }
@@ -459,7 +462,6 @@ bool ProgotronParser::parse_loop()
 
 bool ProgotronParser::parse_statement()
 {
-  cout << "Parsing a statement" << endl;
   if(parse_assign() || parse_print() || parse_ret() || parse_if() || parse_loop())
   {
     return true;
@@ -475,7 +477,6 @@ bool ProgotronParser::parse_statement_seq()
     res = true;
     while(parse_statement())
     {
-      cout << "Parsed a statement" << endl;
     }
   }
   return res;
