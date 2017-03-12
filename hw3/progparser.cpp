@@ -53,8 +53,8 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  if(parse.parse_fact())
-    cout << "Factor" << endl;
+  if(parse.parse_term())
+    cout << "TERM" << endl;
   cout << endl;
   return 0;
 }
@@ -256,6 +256,26 @@ bool ProgotronParser::parse_fact()
       return true;
   }
   return false;
+}
+
+bool ProgotronParser::parse_term()
+{
+  bool res = false;
+  if(parse_fact())
+  {
+    res = true;
+    while(parse_mul_op())
+    {
+      if(parse_fact())
+      {}
+      else
+      {
+        res = false;
+        break;
+      }
+    }
+  }
+  return res;
 }
 
 void ProgotronParser::get_tokens()
