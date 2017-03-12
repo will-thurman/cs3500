@@ -53,7 +53,7 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  if(parse.parse_term())
+  if(parse.parse_exp())
     cout << "TERM" << endl;
   cout << endl;
   return 0;
@@ -249,7 +249,14 @@ bool ProgotronParser::parse_fact()
   else if(m_tokens[0] == "(")
   {
     m_tokens.erase(m_tokens.begin());
-    cout << "IMPLEMENT EXPRESSION! FAIL..." << endl;
+    if(parse_exp())
+    {
+      if(m_tokens[0] == ")")
+      {
+        m_tokens.erase(m_tokens.begin());
+        return true;
+      }
+    }
     return false; 
   }
   else if(m_tokens[0] == "~")
@@ -267,8 +274,9 @@ bool ProgotronParser::parse_term()
   if(parse_fact())
   {
     res = true;
-    while(parse_mul_op())
+    while(m_tokens[0] == "*" || m_tokens[0] == "/" || m_tokens[0] == "AND")
     {
+      parse_mul_op();
       if(parse_fact())
       {}
       else
@@ -288,8 +296,9 @@ bool ProgotronParser::parse_sim_exp()
   if(parse_term())
   {
     res = true;
-    while(parse_add_op())
+    while(m_tokens[0] == "+" || m_tokens[0] == "-" || m_tokens[0] == "&" || m_tokens[0] == "OR")
     {
+      parse_add_op();
       if(parse_term())
       {}
       else
@@ -315,8 +324,6 @@ bool ProgotronParser::parse_exp()
       else
         res = false;
     }
-    else
-      res = false;
   }
   return res;
 }
