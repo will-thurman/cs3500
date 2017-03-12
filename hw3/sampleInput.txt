@@ -1,1 +1,6 @@
-( ( will ) + 20 * 10 ) < 15
+FUNC foo ( LOOP )
+BEGIN BEGIN !
+  x := END. !
+  PRINT ( RETURN ) !
+IF
+

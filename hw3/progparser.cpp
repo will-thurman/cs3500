@@ -164,21 +164,20 @@ bool ProgotronParser::parse_id()
     i++;
     
     
-    if(isalnum(m_tokens[0][i]))
+    if(isalnum(m_tokens[0][i]) && i < m_tokens[0].length())
     {
       while(isalnum(m_tokens[0][i]))
       {
         i++;
         
       }
-      
-      if(i == m_tokens[0].length())
+    }
+    if(i == m_tokens[0].length())
+    {
+      if(!is_keyword(m_tokens[0]))
       {
-        if(!is_keyword(m_tokens[0]))
-        {
-          m_tokens.erase(m_tokens.begin());
-          return true;
-        }
+        m_tokens.erase(m_tokens.begin());
+        return true;
       }
     }
   }
@@ -434,6 +433,7 @@ bool ProgotronParser::parse_loop()
 {
   if(m_tokens[0] == "LOOP")
   {
+    m_tokens.erase(m_tokens.begin());
     if(m_tokens[0] == "(")
     {
       m_tokens.erase(m_tokens.begin());
@@ -446,6 +446,7 @@ bool ProgotronParser::parse_loop()
           {
             if(m_tokens[0] == "POOL")
             {
+              m_tokens.erase(m_tokens.begin());
               return true;
             }
           }
@@ -458,6 +459,7 @@ bool ProgotronParser::parse_loop()
 
 bool ProgotronParser::parse_statement()
 {
+  cout << "Parsing a statement" << endl;
   if(parse_assign() || parse_print() || parse_ret() || parse_if() || parse_loop())
   {
     return true;
@@ -472,7 +474,9 @@ bool ProgotronParser::parse_statement_seq()
   {
     res = true;
     while(parse_statement())
-    {}
+    {
+      cout << "Parsed a statement" << endl;
+    }
   }
   return res;
 }
@@ -514,6 +518,7 @@ bool ProgotronParser::parse_func_dec()
           m_tokens.erase(m_tokens.begin());
           if(m_tokens[0] == "BEGIN")
           {
+            m_tokens.erase(m_tokens.begin());
             if(parse_statement_seq())
             {
               if(m_tokens[0] == "END.")
