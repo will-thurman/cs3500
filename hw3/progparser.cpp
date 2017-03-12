@@ -239,7 +239,7 @@ bool ProgotronParser::parse_mul_op()
 
 bool ProgotronParser::parse_fact()
 {
-  if(parse_int || parse_dec || parse_id || parse_str)
+  if(parse_int() || parse_dec() || parse_id() || parse_str())
   {
     return true;
   }
