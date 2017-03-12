@@ -97,142 +97,145 @@ bool ProgotronParser::parse_int()
   return false;
 }
 
-// bool ProgotronParser::parse_dec()
-// {
-  // if(m_next == '+' || m_next == '-')
-  // {
-    // get_token();
-  // }
-  // if(isdigit(m_next))
-  // {
-    // while(isdigit(m_next))
-      // get_token();
+bool ProgotronParser::parse_dec()
+{
+  int i = 0;
+  if(m_tokens[0][i] == '+' || m_tokens[0][i] == '-')
+  {
+    i++;
+  }
+  if(isdigit(m_tokens[0][i]))
+  {
+     
+    while(isdigit(m_tokens[0][i]) && i < m_tokens[0].length())
+      i++;
     
-    // if(m_next == '.')
-      // get_token();
-    
-    // if(isdigit(m_next))
-    // {
-      // while(isdigit(m_next))
-      // {
-        // get_token();
-      // }
-      // if(isspace(m_next))
-      // {
-        // return true;
-      // }
-    // }
-  // }
-  // return false;
-// }
-
-// bool ProgotronParser::parse_str()
-// {
-  // if(m_next == '"')
-  // {
-    // get_token();
-    
-    // if(!isspace(m_next))
-    // {
-      // while(m_next != '"')
-      // {
-        // get_token();
-        // if(isspace(m_next))
-          // return false;
-        
-        
-      // }
-      // if(m_next == '"')
-        // get_token();
-      
-      // if(isspace(m_next))
-        // return true;
-    // }
-  // }
-  // return false;
-// }
-
-// bool ProgotronParser::parse_id()
-// {
-  // string id = "";
+    if(m_tokens[0][i] == '.')
+    {
+      i++;
+      while(isdigit(m_tokens[0][i]) && i < m_tokens[0].length())
+        i++;
+      if(i == m_tokens[0].length())
+      {
+        m_tokens.erase(m_tokens.begin());
+        return true;
+      }
+    }
+  }
+  return false;
   
-  // if(isalpha(m_next))
-  // {
-    // get_token();
-    // id += m_token;
+}
+
+bool ProgotronParser::parse_str()
+{
+  int i = 0;
+  if(m_tokens[0][i] == '"')
+  {
+    i++;
     
-    // if(isalnum(m_next))
-    // {
-      // while(isalnum(m_next))
-      // {
-        // get_token();
-        // id += m_token;
-      // }
+    if(!isspace(m_tokens[0][i]))
+    {
+      while(m_tokens[0][i] != '"')
+      {
+        i++;
+        if(isspace(m_tokens[0][i]))
+          return false;
+        
+        
+      }
+      if(m_tokens[0][i] == '"')
+        i++;
       
-      // if(isspace(m_next))
-      // {
-        // if(!is_keyword(id))
-          // return true;
-      // }
-    // }
-  // }
-  // return false;
-// }
+      if(i == m_tokens[0].length())
+      {
+        m_tokens.erase(m_tokens.begin());
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
-// bool ProgotronParser::parse_rel()
-// {
-  // if(m_next == '<' || m_next == '>' || m_next == '=' || m_next == '#')
-  // {
-    // get_token();
-    // if(isspace(m_next))
-      // return true;
-  // }
-  // return false;
-// }
+bool ProgotronParser::parse_id()
+{
+  int i = 0;
+  if(isalpha(m_tokens[0][i]))
+  {
+    i++;
+    
+    
+    if(isalnum(m_tokens[0][i]))
+    {
+      while(isalnum(m_tokens[0][i]))
+      {
+        i++;
+        
+      }
+      
+      if(i == m_tokens[0].length())
+      {
+        if(!is_keyword(m_tokens[0]))
+        {
+          m_tokens.erase(m_tokens.begin());
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
 
-// bool ProgotronParser::parse_add_op()
-// {
-  // string op = "";
-  // if(m_next == '+' || m_next == '-' || m_next == '&')
-  // {
-    // get_token();
-    // if(isspace(m_next))
-      // return true;
-  // }
-  // else if(m_next == 'O')
-  // {
-    // while(!isspace(m_next))
-    // {
-      // get_token();
-      // op += m_token;
-    // }
-    // if(op == "OR")
-      // return true;
-  // }
-  // return false;
-// }
+bool ProgotronParser::parse_rel()
+{
+  int i = 0;
+  if(m_tokens[0][i] == '<' || m_tokens[0][i] == '>' || m_tokens[0][i] == '=' || m_tokens[0][i] == '#')
+  {
+    i++;
+    if(i == m_tokens[0].length())
+    {
+      m_tokens.erase(m_tokens.begin());
+      return true;
+    }
+  }
+  return false;
+}
 
-// bool ProgotronParser::parse_mul_op()
-// {
-  // string op = "";
-  // if(m_next == '*' || m_next == '/')
-  // {
-    // get_token();
-    // if(isspace(m_next))
-      // return true;
-  // }
-  // else if(m_next == 'A')
-  // {
-    // while(!isspace(m_next))
-    // {
-      // get_token();
-      // op += m_token;
-    // }
-    // if(op == "AND")
-      // return true;
-  // }
-  // return false;
-// }
+bool ProgotronParser::parse_add_op()
+{
+  int i = 0;
+  if(m_tokens[0][i] == '+' || m_tokens[0][i] == '-' || m_tokens[0][i] == '&')
+  {
+    i++;
+    if( i == m_tokens[0].length())
+    {
+      m_tokens.erase(m_tokens.begin());
+      return true;
+    }
+  }
+  else if(m_tokens[0] == 'OR')
+  {
+    m_tokens.erase(m_tokens.begin());
+    return true;
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_mul_op()
+{
+  int i = 0;
+  if(m_tokens[0][i] == '*' || m_tokens[0][i] == '/')
+  {
+    i++;
+    if(i == m_tokens[0].length())
+      return true;
+  }
+  else if(m_tokens[0] == "AND")
+  {
+    m_tokens.erase(m_tokens.begin());
+    return true;
+  }
+  return false;
+}
 
 void ProgotronParser::get_tokens()
 {
