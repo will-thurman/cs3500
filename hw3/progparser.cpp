@@ -53,7 +53,7 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  if(parse.parse_int())
+  if(parse.parse_mul_op())
     cout << "ID" << endl;
   cout << endl;
   return 0;
@@ -212,7 +212,7 @@ bool ProgotronParser::parse_add_op()
       return true;
     }
   }
-  else if(m_tokens[0] == 'OR')
+  else if(m_tokens[0] == "OR")
   {
     m_tokens.erase(m_tokens.begin());
     return true;
