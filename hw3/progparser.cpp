@@ -282,6 +282,45 @@ bool ProgotronParser::parse_term()
   return res;
 }
 
+bool ProgotronParser::parse_sim_exp()
+{
+  bool res = false;
+  if(parse_term())
+  {
+    res = true;
+    while(parse_add_op())
+    {
+      if(parse_term())
+      {}
+      else
+      {
+        res = false;
+        break;
+      }
+    }
+  }
+  return res;
+}
+
+bool ProgotronParser::parse_exp()
+{
+  bool res = false;
+  if(parse_sim_exp())
+  {
+    res = true;
+    if(parse_rel())
+    {
+      if(parse_sim_exp())
+      {}
+      else
+        res = false;
+    }
+    else
+      res = false;
+  }
+  return res;
+}
+
 void ProgotronParser::get_tokens()
 {
   string token;
