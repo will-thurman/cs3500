@@ -13,10 +13,10 @@ class ProgotronParser
     
     ProgotronParser()
     {
-      m_next = cin.peek();
+      get_tokens();
     }
 		
-    string get_tokens();
+    void get_tokens();
     void skip_whitespace();
     
     bool is_keyword(const string& val);
@@ -90,7 +90,7 @@ bool ProgotronParser::parse_int()
 
     if(i == m_tokens[0].length())
     {
-      m_tokens[0].erase(m_tokens.begin());
+      m_tokens.erase(m_tokens.begin());
       return true;
     }
   }
