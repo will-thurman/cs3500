@@ -54,12 +54,13 @@ int main()
 {
   ProgotronParser parse;
   if(parse.parse_func_seq())
+  {
     cout << "CORRECT" << endl;
+  }
   else
   {
-    cout << "INVALID!"
+    cout << "INVALID!" << endl;
   }
-  cout << endl;
   return 0;
 }
 
