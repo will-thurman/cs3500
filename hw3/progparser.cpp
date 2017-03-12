@@ -53,8 +53,8 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  if(parse.parse_exp())
-    cout << "TERM" << endl;
+  if(parse.parse_func_seq())
+    cout << "CORRECT" << endl;
   cout << endl;
   return 0;
 }
@@ -324,6 +324,221 @@ bool ProgotronParser::parse_exp()
       else
         res = false;
     }
+  }
+  return res;
+}
+
+bool ProgotronParser::parse_assign()
+{
+  if(parse_id())
+  {
+    if(m_tokens[0] == ":=")
+    {
+      m_tokens.erase(m_tokens.begin());
+      if(parse_exp())
+      {
+        if(m_tokens[0] == "!")
+        {
+          m_tokens.erase(m_tokens.begin());
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_print()
+{
+  if(m_tokens[0] == "PRINT")
+  {
+    m_tokens.erase(m_tokens.begin());
+    if(m_tokens[0] == "(")
+    {
+      m_tokens.erase(m_tokens.begin());
+      if(parse_exp())
+      {
+        if(m_tokens[0] == ")")
+        {
+          m_tokens.erase(m_tokens.begin());
+          if(m_tokens[0] == "!")
+          {
+            m_tokens.erase(m_tokens.begin());
+            return true;
+          }
+        }
+      }
+    }
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_ret()
+{
+  if(m_tokens[0] == "RET")
+  {
+    m_tokens.erase(m_tokens.begin());
+    if(parse_id())
+    {
+      if(m_tokens[0] == "!")
+      {
+        m_tokens.erase(m_tokens.begin());
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_if()
+{
+  if(m_tokens[0] == "IF")
+  {
+    m_tokens.erase(m_tokens.begin());
+    if(m_tokens[0] == "(")
+    {
+      m_tokens.erase(m_tokens.begin());
+      if(parse_exp())
+      {
+        if(m_tokens[0] == ")")
+        {
+          m_tokens.erase(m_tokens.begin());
+          if(parse_statement_seq())
+          {
+            if(m_tokens[0] == "ELSE")
+            {
+              m_tokens.erase(m_tokens.begin());
+              if(parse_statement_seq())
+              {
+                if(m_tokens[0] == "FI")
+                {
+                  m_tokens.erase(m_tokens.begin());
+                  return true;
+                }
+              }
+            }
+            else if(m_tokens[0] == "FI")
+            {
+              m_tokens.erase(m_tokens.begin());
+              return true;
+            }
+          }
+        }
+      }
+    }
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_loop()
+{
+  if(m_tokens[0] == "LOOP")
+  {
+    if(m_tokens[0] == "(")
+    {
+      m_tokens.erase(m_tokens.begin());
+      if(parse_exp())
+      {
+        if(m_tokens[0] == ")")
+        {
+          m_tokens.erase(m_tokens.begin());
+          if(parse_statement_seq())
+          {
+            if(m_tokens[0] == "POOL")
+            {
+              return true;
+            }
+          }
+        }
+      }
+    }
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_statement()
+{
+  if(parse_assign() || parse_print() || parse_ret() || parse_if() || parse_loop())
+  {
+    return true;
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_statement_seq()
+{
+  bool res = false;
+  if(parse_statement())
+  {
+    res = true;
+    while(parse_statement())
+    {}
+  }
+  return res;
+}
+
+bool ProgotronParser::parse_param_seq()
+{
+  bool res = false;
+  if(parse_id())
+  {
+    res = true;
+    while(m_tokens[0] == ",")
+    {
+      m_tokens.erase(m_tokens.begin());
+      if(parse_id())
+      {}
+      else
+      {
+        res = false;
+        break;
+      }
+    }
+  }
+  return res;
+}
+
+bool ProgotronParser::parse_func_dec()
+{
+  if(m_tokens[0] == "FUNC")
+  {
+    m_tokens.erase(m_tokens.begin());
+    if(parse_id())
+    {
+      if(m_tokens[0] == "(")
+      {
+        m_tokens.erase(m_tokens.begin());
+        parse_param_seq();
+        if(m_tokens[0] == ")")
+        {
+          m_tokens.erase(m_tokens.begin());
+          if(m_tokens[0] == "BEGIN")
+          {
+            if(parse_statement_seq())
+            {
+              if(m_tokens[0] == "END.")
+              {
+                m_tokens.erase(m_tokens.begin());
+                return true;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return false;
+}
+
+bool ProgotronParser::parse_func_seq()
+{
+  bool res = false;
+  
+  if(parse_func_dec())
+  {
+    res = true;
+    while(parse_func_dec())
+    { }
   }
   return res;
 }
