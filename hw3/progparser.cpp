@@ -53,8 +53,8 @@ class ProgotronParser
 int main()
 {
   ProgotronParser parse;
-  if(parse.parse_int())
-    cout << "ID" << endl;
+  if(parse.parse_fact())
+    cout << "Factor" << endl;
   cout << endl;
   return 0;
 }
@@ -235,6 +235,27 @@ bool ProgotronParser::parse_mul_op()
     return true;
   }
   return false;
+}
+
+bool ProgotronParser::parse_fact()
+{
+  if(parse_int || parse_dec || parse_id || parse_str)
+  {
+    return true;
+  }
+  else if(m_tokens[0] == "(")
+  {
+    m_tokens.erase(m_tokens.begin());
+    cout << "IMPLEMENT EXPRESSION! FAIL..." << endl;
+    
+  }
+  else if(m_tokens[0] == "~")
+  {
+    m_tokens.erase(m_tokens.begin());
+    if(parse_fact())
+      return true;
+  }
+  reutrn false;
 }
 
 void ProgotronParser::get_tokens()
