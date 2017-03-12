@@ -227,7 +227,10 @@ bool ProgotronParser::parse_mul_op()
   {
     i++;
     if(i == m_tokens[0].length())
+    {
+      m_tokens.erase(m_tokens.begin());
       return true;
+    }
   }
   else if(m_tokens[0] == "AND")
   {
@@ -270,6 +273,7 @@ bool ProgotronParser::parse_term()
       {}
       else
       {
+        cout << "Stopping because of " << m_tokens[0] << endl;
         res = false;
         break;
       }
