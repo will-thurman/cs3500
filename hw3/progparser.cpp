@@ -555,7 +555,6 @@ void ProgotronParser::get_tokens()
   string token;
   while(cin >> token)
   {
-    cout << token;
     m_tokens.push_back(token);
   }
 }
