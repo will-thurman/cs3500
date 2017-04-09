@@ -1,6 +1,0 @@
-FUNC foo ( LOOP )
-BEGIN BEGIN !
-  x := END. !
-  PRINT ( RETURN ) !
-IF
-
