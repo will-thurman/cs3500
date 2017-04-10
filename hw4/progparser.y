@@ -55,9 +55,9 @@ ParamSeq     : /* empty */        { cout << "RULE: ParamSeq ::= empty" << endl; 
              | T_IDENT K_COMMA ParamSeq   { cout << "RULE: ParamSeq ::= identifier , ParamSeq" << endl;}
              ;
              
-statementSeq : statement
+StatementSeq : statement
                { cout << "RULE: StatementSeq ::= Statement" << endl; }
-             | statement statementSeq
+             | statement StatementSeq
            { cout << "RULE: StatementSeq ::= Statement StatementSeq" << endl; }
              ;
 
