@@ -27,6 +27,7 @@ ALPHANUM   [a-zA-Z0-9]
  /* Keyword tokens */
 "!"        { writeToken("K_BANG"); return K_BANG; }
 ":="       { writeToken("K_ASSIGN"); return K_ASSIGN; }
+","        { writeToken("K_COMMA"); return K_COMMA; }
 "~"        { writeToken("K_NEG"); return K_NEG; } 
 "("        { writeToken("K_LPAREN"); return K_LPAREN; }
 ")"        { writeToken("K_RPAREN"); return K_RPAREN; }
@@ -39,7 +40,7 @@ ALPHANUM   [a-zA-Z0-9]
 "POOL"     { writeToken("K_POOL"); return K_POOL; }
 "FUNC"     { writeToken("K_FUNC"); return K_FUNC; }
 "BEGIN"    { writeToken("K_BEGIN"); return K_BEGIN; }
-"END"      { writeToken("K_END"); return K_END; }
+"END."      { writeToken("K_END"); return K_END; }
 
 
 
@@ -47,7 +48,7 @@ ALPHANUM   [a-zA-Z0-9]
 {ALPHA}{ALPHANUM}*         { writeToken("T_IDENT"); return T_IDENT; }
 [+-]?{DIGIT}+              { writeToken("T_INTEGER"); return T_INTEGER; }
 [+-]?{DIGIT}+\.{DIGIT}+    { writeToken("T_DECIMAL"); return T_DECIMAL; }
-{ALPHANUM}*                { writeToken("T_STRING"); return T_STRING;}
+\"[^\s\n"]*\"              { writeToken("T_STRING"); return T_STRING;}
 "+"|"-"|"&"|"OR"           { writeToken("T_ADDOPERATOR"); return T_ADDOPERATOR; }
 "*"|"/"|"AND"              { writeToken("T_MULOPERATOR"); return T_MULOPERATOR; }
 "<"|">"|"="|"#"            { writeToken("T_RELATION"); return T_RELATION; }
