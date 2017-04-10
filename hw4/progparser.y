@@ -49,6 +49,7 @@ functionSeq  : /* empty */                { cout << "RULE: FunctionSeq ::= empty
              
 functionDec  : K_FUNC T_IDENT K_LPAREN K_RPAREN K_BEGIN statementSeq K_END            { cout << "RULE: FunctionDec ::= FUNC identifier ( ) BEGIN StatementSeq END" << endl; }
              | K_FUNC T_IDENT K_LPAREN paramSeq K_RPAREN K_BEGIN statementSeq K_END   { cout << "RULE: FunctionDec ::= FUNC identifier ( ParamSeq ) BEGIN StatementSeq END" << endl; }
+             ;
              
 paramSeq     : /* empty */        { cout << "RULE: ParamSeq ::= empty" << endl; }
              | T_IDENT            { cout << "RULE: ParamSeq ::= identifier" << endl; }
