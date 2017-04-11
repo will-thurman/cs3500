@@ -1,3 +1,7 @@
+// Will Thurman
+// cs3500
+// hw4 - progparser.l
+
 %{
 #include <iostream>
 #include <iomanip>

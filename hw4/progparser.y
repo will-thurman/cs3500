@@ -1,4 +1,7 @@
-// -- PREAMBLE ------------------------------------------
+// Will Thurman 
+// cs3500
+// hw4 - progparser.y
+
 %{
 #include <iostream>
 using namespace std;
