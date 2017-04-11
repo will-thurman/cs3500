@@ -42,8 +42,7 @@ int yyerror(const char *p);
 
 %%   //-- GRAMMAR RULES ------------------------------------
 /* NOTE: Bison likes the start symbol to be the first rule */
-functionSeq  : /* empty */                { cout << "RULE: FunctionSeq ::= empty" << endl; }
-             | functionDec                { cout << "RULE: FunctionSeq ::= FunctionDec" << endl; }
+functionSeq  : functionDec                { cout << "RULE: FunctionSeq ::= FunctionDec" << endl; }
              | functionDec functionSeq    { cout << "RULE: FunctionSeq ::= FunctionDec FunctionSeq" << endl; }
              ;
              
