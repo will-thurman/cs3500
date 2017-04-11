@@ -48,11 +48,26 @@ extern int yydebug;
     T_IDENT = 258,
     T_INTEGER = 259,
     T_DECIMAL = 260,
-    K_BANG = 261,
-    K_ASSIGN = 262,
-    K_LPAREN = 263,
-    K_RPAREN = 264,
-    K_PRINT = 265
+    T_STRING = 261,
+    T_RELATION = 262,
+    T_ADDOPERATOR = 263,
+    T_MULOPERATOR = 264,
+    K_BANG = 265,
+    K_ASSIGN = 266,
+    K_NEG = 267,
+    K_LPAREN = 268,
+    K_RPAREN = 269,
+    K_PRINT = 270,
+    K_RET = 271,
+    K_IF = 272,
+    K_FI = 273,
+    K_ELSE = 274,
+    K_LOOP = 275,
+    K_POOL = 276,
+    K_FUNC = 277,
+    K_BEGIN = 278,
+    K_END = 279,
+    K_COMMA = 280
   };
 #endif
 

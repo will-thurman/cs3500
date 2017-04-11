@@ -34,7 +34,7 @@ ALPHANUM   [a-zA-Z0-9]
 "PRINT"    { writeToken("K_PRINT"); return K_PRINT; }
 "RET"      { writeToken("K_RET"); return K_RET; }
 "IF"       { writeToken("K_IF"); return K_IF; }
-"FI"       { writeToken("K_FI"); return K_FI}
+"FI"       { writeToken("K_FI"); return K_FI; }
 "ELSE"     { writeToken("K_ELSE"); return K_ELSE; }
 "LOOP"     { writeToken("K_LOOP"); return K_LOOP; }
 "POOL"     { writeToken("K_POOL"); return K_POOL; }

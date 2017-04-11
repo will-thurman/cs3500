@@ -113,11 +113,26 @@ extern int yydebug;
     T_IDENT = 258,
     T_INTEGER = 259,
     T_DECIMAL = 260,
-    K_BANG = 261,
-    K_ASSIGN = 262,
-    K_LPAREN = 263,
-    K_RPAREN = 264,
-    K_PRINT = 265
+    T_STRING = 261,
+    T_RELATION = 262,
+    T_ADDOPERATOR = 263,
+    T_MULOPERATOR = 264,
+    K_BANG = 265,
+    K_ASSIGN = 266,
+    K_NEG = 267,
+    K_LPAREN = 268,
+    K_RPAREN = 269,
+    K_PRINT = 270,
+    K_RET = 271,
+    K_IF = 272,
+    K_FI = 273,
+    K_ELSE = 274,
+    K_LOOP = 275,
+    K_POOL = 276,
+    K_FUNC = 277,
+    K_BEGIN = 278,
+    K_END = 279,
+    K_COMMA = 280
   };
 #endif
 
@@ -137,7 +152,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 141 "progparser.tab.c" /* yacc.c:358  */
+#line 156 "progparser.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -377,23 +392,23 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  9
+#define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   12
+#define YYLAST   82
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  11
+#define YYNTOKENS  26
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  5
+#define YYNNTS  15
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  8
+#define YYNRULES  38
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  16
+#define YYNSTATES  72
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   265
+#define YYMAXUTOK   280
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -428,14 +443,19 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    30,    30,    32,    36,    37,    38,    41,    44
+       0,    45,    45,    46,    49,    50,    53,    54,    55,    58,
+      60,    64,    65,    66,    69,    70,    71,    74,    75,    76,
+      79,    80,    81,    82,    83,    84,    85,    90,    91,    92,
+      93,    94,    95,    98,   101,   104,   107,   108,   110
 };
 #endif
 
@@ -445,8 +465,13 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "T_IDENT", "T_INTEGER", "T_DECIMAL",
-  "K_BANG", "K_ASSIGN", "K_LPAREN", "K_RPAREN", "K_PRINT", "$accept",
-  "statementSeq", "statement", "assignment", "PrintStatement", YY_NULLPTR
+  "T_STRING", "T_RELATION", "T_ADDOPERATOR", "T_MULOPERATOR", "K_BANG",
+  "K_ASSIGN", "K_NEG", "K_LPAREN", "K_RPAREN", "K_PRINT", "K_RET", "K_IF",
+  "K_FI", "K_ELSE", "K_LOOP", "K_POOL", "K_FUNC", "K_BEGIN", "K_END",
+  "K_COMMA", "$accept", "functionSeq", "functionDec", "paramSeq",
+  "statementSeq", "expression", "simpleExpression", "term", "factor",
+  "statement", "assignment", "printStatement", "retStatement",
+  "ifStatement", "loopStatement", YY_NULLPTR
 };
 #endif
 
@@ -456,16 +481,17 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+     275,   276,   277,   278,   279,   280
 };
 # endif
 
-#define YYPACT_NINF -7
+#define YYPACT_NINF -29
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-7)))
+  (!!((Yystate) == (-29)))
 
-#define YYTABLE_NINF -1
+#define YYTABLE_NINF -21
 
 #define yytable_value_is_error(Yytable_value) \
   0
@@ -474,8 +500,14 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -3,    -6,    -5,     2,    -3,    -7,    -7,    -1,     1,    -7,
-      -7,     0,     3,    -7,     4,    -7
+     -17,     7,    11,   -17,     8,   -29,   -29,     4,   -13,    -6,
+       6,    19,    -1,     0,   -29,    13,    12,    24,    15,    16,
+      17,    -1,   -29,   -29,   -29,   -29,   -29,    -1,    27,    27,
+      32,    27,    27,   -29,   -29,    26,   -29,   -29,   -29,   -29,
+      62,    27,    41,    52,    50,    53,    47,   -29,    55,    56,
+     -29,   -29,    57,   -29,    27,    40,    51,    63,    -1,    -1,
+     -29,   -29,   -29,   -29,   -29,   -10,    58,   -29,    -1,   -29,
+      54,   -29
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -483,55 +515,89 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       4,     0,     0,     0,     2,     5,     6,     0,     0,     1,
-       3,     0,     0,     7,     0,     8
+       0,     0,     0,     2,     0,     1,     3,     0,     7,     0,
+       0,     6,    27,     0,     8,     0,     0,     0,     0,     0,
+       0,     9,    28,    29,    30,    31,    32,    27,    11,    11,
+       0,    11,    11,     4,    10,     0,    24,    21,    22,    23,
+      20,    11,     0,    12,    15,    18,     0,    35,     0,     0,
+       5,    26,     0,    33,    11,    14,    17,     0,    27,    27,
+      25,    13,    16,    19,    34,     0,     0,    36,    27,    38,
+       0,    37
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -7,     5,    -7,    -7,    -7
+     -29,    73,   -29,    66,   -21,   -28,    23,    25,    42,   -29,
+     -29,   -29,   -29,   -29,   -29
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     3,     4,     5,     6
+      -1,     2,     3,    10,    20,    42,    43,    44,    45,    21,
+      22,    23,    24,    25,    26
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
      positive, shift that token.  If negative, reduce the rule whose
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
-static const yytype_uint8 yytable[] =
+static const yytype_int8 yytable[] =
 {
-       1,     7,     9,     8,    11,    12,    13,     2,     0,    10,
-      15,     0,    14
+      34,    46,    15,    48,    49,     1,    35,     8,    67,    68,
+       4,     5,    11,    52,    16,    17,    18,    12,     9,    19,
+      13,     7,     8,    27,    28,    29,    61,    30,    31,    32,
+      36,    37,    38,    39,   -14,   -17,   -20,    65,    66,    40,
+      41,    33,    47,    36,    37,    38,    39,    70,   -17,   -20,
+      50,    53,    40,    41,    36,    37,    38,    39,    55,    54,
+     -20,    57,    56,    40,    41,    36,    37,    38,    39,    58,
+      59,    60,    71,    64,    40,    41,     6,    14,    62,    69,
+       0,    63,    51
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     7,     0,     8,     5,     4,     6,    10,    -1,     4,
-       6,    -1,     9
+      21,    29,     3,    31,    32,    22,    27,     3,    18,    19,
+       3,     0,    25,    41,    15,    16,    17,    23,    14,    20,
+      14,    13,     3,    23,    11,    13,    54,     3,    13,    13,
+       3,     4,     5,     6,     7,     8,     9,    58,    59,    12,
+      13,    24,    10,     3,     4,     5,     6,    68,     8,     9,
+      24,    10,    12,    13,     3,     4,     5,     6,     8,     7,
+       9,    14,     9,    12,    13,     3,     4,     5,     6,    14,
+      14,    14,    18,    10,    12,    13,     3,    11,    55,    21,
+      -1,    56,    40
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,    10,    12,    13,    14,    15,     7,     8,     0,
-      12,     5,     4,     6,     9,     6
+       0,    22,    27,    28,     3,     0,    27,    13,     3,    14,
+      29,    25,    23,    14,    29,     3,    15,    16,    17,    20,
+      30,    35,    36,    37,    38,    39,    40,    23,    11,    13,
+       3,    13,    13,    24,    30,    30,     3,     4,     5,     6,
+      12,    13,    31,    32,    33,    34,    31,    10,    31,    31,
+      24,    34,    31,    10,     7,     8,     9,    14,    14,    14,
+      14,    31,    32,    33,    10,    30,    30,    18,    19,    21,
+      30,    18
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    11,    12,    12,    13,    13,    13,    14,    15
+       0,    26,    27,    27,    28,    28,    29,    29,    29,    30,
+      30,    31,    31,    31,    32,    32,    32,    33,    33,    33,
+      34,    34,    34,    34,    34,    34,    34,    35,    35,    35,
+      35,    35,    35,    36,    37,    38,    39,    39,    40
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     2,     0,     1,     1,     4,     5
+       0,     2,     1,     2,     7,     8,     0,     1,     3,     1,
+       2,     0,     1,     3,     0,     1,     3,     0,     1,     3,
+       0,     1,     1,     1,     1,     3,     2,     0,     1,     1,
+       1,     1,     1,     4,     5,     3,     6,     8,     6
 };
 
 
@@ -1208,49 +1274,211 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 31 "progparser.y" /* yacc.c:1646  */
-    { cout << "RULE: StatementSeq ::= Statement" << endl; }
-#line 1214 "progparser.tab.c" /* yacc.c:1646  */
+#line 45 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: FunctionSeq ::= FunctionDec" << endl; }
+#line 1280 "progparser.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 33 "progparser.y" /* yacc.c:1646  */
-    { cout << "RULE: StatementSeq ::= Statement StatementSeq" << endl; }
-#line 1220 "progparser.tab.c" /* yacc.c:1646  */
+#line 46 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: FunctionSeq ::= FunctionDec FunctionSeq" << endl; }
+#line 1286 "progparser.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 36 "progparser.y" /* yacc.c:1646  */
-    { cout << "RULE: Statement ::= empty" << endl; }
-#line 1226 "progparser.tab.c" /* yacc.c:1646  */
+#line 49 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: FunctionDec ::= FUNC identifier ( ) BEGIN StatementSeq END" << endl; }
+#line 1292 "progparser.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 37 "progparser.y" /* yacc.c:1646  */
-    { cout << "RULE: Statement ::= Assignment" << endl; }
-#line 1232 "progparser.tab.c" /* yacc.c:1646  */
+#line 50 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: FunctionDec ::= FUNC identifier ( ParamSeq ) BEGIN StatementSeq END" << endl; }
+#line 1298 "progparser.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 38 "progparser.y" /* yacc.c:1646  */
-    { cout << "RULE: Statement ::= PrintStatement" << endl; }
-#line 1238 "progparser.tab.c" /* yacc.c:1646  */
+#line 53 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: ParamSeq ::= empty" << endl; }
+#line 1304 "progparser.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 42 "progparser.y" /* yacc.c:1646  */
-    { cout << "RULE: Assignment ::= ident := decimal ! " << endl; }
-#line 1244 "progparser.tab.c" /* yacc.c:1646  */
+#line 54 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: ParamSeq ::= identifier" << endl; }
+#line 1310 "progparser.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 45 "progparser.y" /* yacc.c:1646  */
-    { cout << "RULE: PrintStatement ::= PRINT ( integer ) !" << endl; }
-#line 1250 "progparser.tab.c" /* yacc.c:1646  */
+#line 55 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: ParamSeq ::= identifier , ParamSeq" << endl;}
+#line 1316 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 9:
+#line 59 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: StatementSeq ::= Statement" << endl; }
+#line 1322 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 10:
+#line 61 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: StatementSeq ::= Statement StatementSeq" << endl; }
+#line 1328 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 11:
+#line 64 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Expression ::= empty" << endl; }
+#line 1334 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 12:
+#line 65 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Expression ::= SimpleExpression" << endl; }
+#line 1340 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 13:
+#line 66 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Expression ::= SimpleExpression T_RELATION SimpleExpression" << endl;}
+#line 1346 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 14:
+#line 69 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: SimpleExpression ::= empty" << endl; }
+#line 1352 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 15:
+#line 70 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: SimpleExpression ::= Term" << endl; }
+#line 1358 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 16:
+#line 71 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: SimpleExpression ::= Term AddOperator SimpleExpression" << endl; }
+#line 1364 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 17:
+#line 74 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Term ::= empty" << endl; }
+#line 1370 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 18:
+#line 75 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Term ::= Factor" << endl; }
+#line 1376 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 19:
+#line 76 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Term ::= Factor MulOperator Term" << endl; }
+#line 1382 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 20:
+#line 79 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Factor ::= empty" << endl; }
+#line 1388 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 21:
+#line 80 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Factor ::= integer" << endl; }
+#line 1394 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 22:
+#line 81 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Factor ::= decimal" << endl; }
+#line 1400 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 23:
+#line 82 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Factor ::= string" << endl; }
+#line 1406 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 24:
+#line 83 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Factor ::= identifier" << endl; }
+#line 1412 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 25:
+#line 84 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Factor ::= ( Expression )" << endl; }
+#line 1418 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 26:
+#line 85 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Factor ::= ~ Factor" << endl; }
+#line 1424 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 27:
+#line 90 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Statement ::= empty" << endl; }
+#line 1430 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 28:
+#line 91 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Statement ::= Assignment" << endl; }
+#line 1436 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 29:
+#line 92 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Statement ::= PrintStatement" << endl; }
+#line 1442 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 33:
+#line 99 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: Assignment ::= ident := decimal ! " << endl; }
+#line 1448 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 34:
+#line 102 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: PrintStatement ::= PRINT ( Expression ) !" << endl; }
+#line 1454 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 35:
+#line 105 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: RetStatement ::= RET identifier !" << endl; }
+#line 1460 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 36:
+#line 107 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: IfStatement ::= IF ( Expression ) StatementSeq FI" << endl; }
+#line 1466 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 37:
+#line 108 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: IfStatement ::= IF ( Expression ) StatementSeq ELSE StatementSeq FI" << endl; }
+#line 1472 "progparser.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 38:
+#line 111 "progparser.y" /* yacc.c:1646  */
+    { cout << "RULE: LoopStatement ::= LOOP ( Expression ) StatementSeq POOL" << endl; }
+#line 1478 "progparser.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1254 "progparser.tab.c" /* yacc.c:1646  */
+#line 1482 "progparser.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1478,7 +1706,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 48 "progparser.y" /* yacc.c:1906  */
+#line 114 "progparser.y" /* yacc.c:1906  */
  //-- EPILOGUE ---------------------------------------------
 // Bison error function 
 int yyerror(const char *p)
