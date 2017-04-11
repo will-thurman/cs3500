@@ -95,7 +95,7 @@ statement : /* empty */     { cout << "RULE: Statement ::= empty" << endl; }
           | loopStatement
           ;
 
-assignment : T_IDENT K_ASSIGN T_DECIMAL K_BANG
+assignment : T_IDENT K_ASSIGN epression K_BANG
            { cout << "RULE: Assignment ::= ident := decimal ! " << endl; }
 
 printStatement : K_PRINT K_LPAREN expression K_RPAREN K_BANG
