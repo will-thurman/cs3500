@@ -42,23 +42,23 @@ int yyerror(const char *p);
 
 %%   //-- GRAMMAR RULES ------------------------------------
 /* NOTE: Bison likes the start symbol to be the first rule */
-functionSeq  : functionDec                { cout << "RULE: FunctionSeq ::= FunctionDec" << endl; }
-             | functionDec functionSeq    { cout << "RULE: FunctionSeq ::= FunctionDec FunctionSeq" << endl; }
+functionSeq  : functionDec                { cout << "RULE: FunctionSequence ::= FunctionDeclaration" << endl; }
+             | functionDec functionSeq    { cout << "RULE: FunctionSequence ::= FunctionDeclaration FunctionSequence" << endl; }
              ;
              
-functionDec  : K_FUNC T_IDENT K_LPAREN K_RPAREN K_BEGIN statementSeq K_END            { cout << "RULE: FunctionDec ::= FUNC identifier ( ) BEGIN StatementSeq END" << endl; }
-             | K_FUNC T_IDENT K_LPAREN paramSeq K_RPAREN K_BEGIN statementSeq K_END   { cout << "RULE: FunctionDec ::= FUNC identifier ( ParamSeq ) BEGIN StatementSeq END" << endl; }
+functionDec  : K_FUNC T_IDENT K_LPAREN K_RPAREN K_BEGIN statementSeq K_END            { cout << "RULE: FunctionDeclaration ::= FUNC identifier ( ) BEGIN StatementSequence END" << endl; }
+             | K_FUNC T_IDENT K_LPAREN paramSeq K_RPAREN K_BEGIN statementSeq K_END   { cout << "RULE: FunctionDeclaration ::= FUNC identifier ( ParamSequence ) BEGIN StatementSequence END" << endl; }
              ;
              
-paramSeq     : /* empty */        { cout << "RULE: ParamSeq ::= empty" << endl; }
-             | T_IDENT            { cout << "RULE: ParamSeq ::= identifier" << endl; }
-             | T_IDENT K_COMMA paramSeq   { cout << "RULE: ParamSeq ::= identifier , ParamSeq" << endl;}
+paramSeq     : /* empty */        { cout << "RULE: ParamSequence ::= empty" << endl; }
+             | T_IDENT            { cout << "RULE: ParamSequence ::= identifier" << endl; }
+             | T_IDENT K_COMMA paramSeq   { cout << "RULE: ParamSequence ::= identifier , ParamSequence" << endl;}
              ;
              
 statementSeq : statement
-               { cout << "RULE: StatementSeq ::= Statement" << endl; }
+               { cout << "RULE: StatementSequence ::= Statement" << endl; }
              | statement statementSeq
-           { cout << "RULE: StatementSeq ::= Statement StatementSeq" << endl; }
+           { cout << "RULE: StatementSequence ::= Statement StatementSequence" << endl; }
              ;
 
 expression  : /* empty */                                   { cout << "RULE: Expression ::= empty" << endl; }
@@ -96,7 +96,7 @@ statement : /* empty */     { cout << "RULE: Statement ::= empty" << endl; }
           ;
 
 assignment : T_IDENT K_ASSIGN expression K_BANG
-           { cout << "RULE: Assignment ::= ident := decimal ! " << endl; }
+           { cout << "RULE: Assignment ::= ident := Expression ! " << endl; }
 
 printStatement : K_PRINT K_LPAREN expression K_RPAREN K_BANG
                { cout << "RULE: PrintStatement ::= PRINT ( Expression ) !" << endl; }
@@ -104,11 +104,11 @@ printStatement : K_PRINT K_LPAREN expression K_RPAREN K_BANG
 retStatement   : K_RET T_IDENT K_BANG
                { cout << "RULE: RetStatement ::= RET identifier !" << endl; }
                
-ifStatement    : K_IF K_LPAREN expression K_RPAREN statementSeq K_FI                        { cout << "RULE: IfStatement ::= IF ( Expression ) StatementSeq FI" << endl; }
-               | K_IF K_LPAREN expression K_RPAREN statementSeq K_ELSE statementSeq K_FI    { cout << "RULE: IfStatement ::= IF ( Expression ) StatementSeq ELSE StatementSeq FI" << endl; }
+ifStatement    : K_IF K_LPAREN expression K_RPAREN statementSeq K_FI                        { cout << "RULE: IfStatement ::= IF ( Expression ) StatementSequence FI" << endl; }
+               | K_IF K_LPAREN expression K_RPAREN statementSeq K_ELSE statementSeq K_FI    { cout << "RULE: IfStatement ::= IF ( Expression ) StatementSequence ELSE StatementSequence FI" << endl; }
                ;
 loopStatement  : K_LOOP K_LPAREN expression K_RPAREN statementSeq K_POOL  
-               { cout << "RULE: LoopStatement ::= LOOP ( Expression ) StatementSeq POOL" << endl; }
+               { cout << "RULE: LoopStatement ::= LOOP ( Expression ) StatementSequence POOL" << endl; }
 
 
 %% //-- EPILOGUE ---------------------------------------------
